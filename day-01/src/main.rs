@@ -1,7 +1,5 @@
 #![allow(unused_variables)]
 
-use std::ops::Mul;
-
 fn main() {
     let exampledata_1 = r#"3   4
 4   3
@@ -10,6 +8,7 @@ fn main() {
 3   9
 3   3"#;
     let data_1 = include_str!("../data/data-1.in");
+
     let exampledata_2 = r#"3   4
 4   3
 2   5
@@ -17,6 +16,7 @@ fn main() {
 3   9
 3   3"#;
     let data_2 = include_str!("../data/data-2.in");
+
     part_one(data_1);
     part_two(data_1);
 }
@@ -52,16 +52,16 @@ fn part_one(data: &str) {
     }
     println!("Total is {sum}");
 }
+
 fn part_two(data: &str) {
     let (mut left, mut right) = split_data(data);
 
     left.sort();
     right.sort();
 
-    let mut sum = 0;
-    for i in 0..left.len() {
-        let apart = left[i].mul(count(left[i], &right));
-        sum += apart;
-    }
+    let sum = left
+        .into_iter()
+        .fold(0, |acc, val| acc + val * count(val, &right));
+
     println!("Total is {sum}");
 }
